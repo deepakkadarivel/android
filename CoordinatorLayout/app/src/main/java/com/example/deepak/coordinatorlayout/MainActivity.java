@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -11,6 +13,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -28,10 +31,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
 
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.BottomBarBadge;
+import com.roughike.bottombar.OnMenuTabClickListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private BottomBar mBottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,22 +56,105 @@ public class MainActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         if (viewPager != null) {
             setupViewPager(viewPager);
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+//        mBottomBar = BottomBar.attach(this, savedInstanceState);
+        mBottomBar = BottomBar.attachShy((CoordinatorLayout) findViewById(R.id.main_content),
+                findViewById(R.id.viewpager), savedInstanceState);
+        mBottomBar.noNavBarGoodness();
+
+        mBottomBar.setItemsFromMenu(R.menu.bottombar_menu, new OnMenuTabClickListener() {
+            @Override
+            public void onMenuTabSelected(@IdRes int menuItemId) {
+
+                if (menuItemId == R.id.nav_home) {
+
+                    viewPager.setCurrentItem(0);
+
+                } else if (menuItemId == R.id.nav_fav) {
+                    viewPager.setCurrentItem(1);
+
+                } else if (menuItemId == R.id.nav_gallery) {
+                    viewPager.setCurrentItem(2);
+
+                } else if (menuItemId == R.id.nav_events) {
+                    viewPager.setCurrentItem(0);
+
+                } else if (menuItemId == R.id.nav_notifications) {
+                    viewPager.setCurrentItem(1);
+
+
+                }
+            }
+
+            @Override
+            public void onMenuTabReSelected(@IdRes int menuItemId) {
+                if (menuItemId == R.id.nav_home) {
+                    // The user reselected item number one, scroll your content to top.
+
+                }
+            }
+        });
+
+        // Setting colors for different tabs when there's more than three of them.
+        // You can set colors for tabs in three different ways as shown below.
+        mBottomBar.mapColorForTab(0, ContextCompat.getColor(this, R.color.colorPrimary));
+        mBottomBar.mapColorForTab(1, ContextCompat.getColor(this, R.color.colorAccent));
+        mBottomBar.mapColorForTab(2, 0xFF5D4037);
+        mBottomBar.mapColorForTab(3, "#FF5252");
+        mBottomBar.mapColorForTab(4, "#FF9800");
+
+
+        // Set the color for the active tab. Ignored on mobile when there are more than three tabs.
+        //  mBottomBar.setActiveTabColor("#009688");
+
+
+        // mBottomBar.selectTabAtPosition(1, true);
+
+        setNotificationBadge();
+    }
+
+    private void setNotificationBadge() {
+
+        // Make a Badge for the first tab, with red background color and a value of "13".
+        BottomBarBadge unreadMessages = mBottomBar.makeBadgeForTabAt(4, "#FF0000", 10);
+
+        // Control the badge's visibility
+        unreadMessages.show();
+        //     unreadMessages.hide();
+
+        // Change the displayed count for this badge.
+        unreadMessages.setCount(4);
+
+        // Change the show / hide animation duration.
+        unreadMessages.setAnimationDuration(200);
+
+        // If you want the badge be shown always after unselecting the tab that contains it.
+        unreadMessages.setAutoShowAfterUnSelection(false);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Necessary to restore the BottomBar's state, otherwise we would
+        // lose the current tab on orientation change.
+        mBottomBar.onSaveInstanceState(outState);
     }
 
     @TargetApi(Build.VERSION_CODES.M)
