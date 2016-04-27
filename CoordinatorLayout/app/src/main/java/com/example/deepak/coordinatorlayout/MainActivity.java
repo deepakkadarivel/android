@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         final ActionBar ab = getSupportActionBar();
         resizeActionbarTitle(ab);
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu_black_24px);
+        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
 
 
