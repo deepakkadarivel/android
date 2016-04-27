@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
 
+import com.example.deepak.coordinatorlayout.views.CustomViewPager;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarBadge;
 import com.roughike.bottombar.OnMenuTabClickListener;
@@ -56,9 +57,10 @@ public class MainActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        final CustomViewPager viewPager = (CustomViewPager) findViewById(R.id.viewpager);
         if (viewPager != null) {
             setupViewPager(viewPager);
+            viewPager.setPagingEnabled(false);
         }
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -83,19 +85,23 @@ public class MainActivity extends AppCompatActivity {
             public void onMenuTabSelected(@IdRes int menuItemId) {
 
                 if (menuItemId == R.id.nav_home) {
-
+                    viewPager.setPagingEnabled(false);
                     viewPager.setCurrentItem(0);
 
                 } else if (menuItemId == R.id.nav_fav) {
+                    viewPager.setPagingEnabled(false);
                     viewPager.setCurrentItem(1);
 
                 } else if (menuItemId == R.id.nav_gallery) {
+                    viewPager.setPagingEnabled(false);
                     viewPager.setCurrentItem(2);
 
                 } else if (menuItemId == R.id.nav_events) {
+                    viewPager.setPagingEnabled(true);
                     viewPager.setCurrentItem(0);
 
                 } else if (menuItemId == R.id.nav_notifications) {
+                    viewPager.setPagingEnabled(false);
                     viewPager.setCurrentItem(1);
 
 
@@ -203,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupViewPager(ViewPager viewPager) {
+    private void setupViewPager(CustomViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new HomeFragment(), "Category 1");
         adapter.addFragment(new HomeFragment(), "Category 2");
