@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.example.deepak.coordinatorlayout.Model.ItemObjects;
 import com.example.deepak.coordinatorlayout.R;
 import com.example.deepak.coordinatorlayout.viewholders.HomeViewHolder;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -35,7 +36,12 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeViewHolder
     @Override
     public void onBindViewHolder(HomeViewHolder holder, int position) {
         holder.itemName.setText(itemList.get(position).getName());
-        holder.itemPhoto.setImageResource(itemList.get(position).getPhoto());
+//        holder.itemPhoto.setImageResource(itemList.get(position).getPhoto());
+        Picasso.with(context)
+                .load(itemList.get(position).getPhoto())
+                .fit()
+                .centerCrop()
+                .into(holder.itemPhoto);
     }
 
     @Override
