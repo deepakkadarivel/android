@@ -1,11 +1,14 @@
 package com.example.deepak.coordinatorlayout.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
+import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.example.deepak.coordinatorlayout.Model.ItemObjects;
 import com.example.deepak.coordinatorlayout.R;
 import com.example.deepak.coordinatorlayout.viewholders.HomeViewHolder;
@@ -36,12 +39,25 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeViewHolder
     @Override
     public void onBindViewHolder(HomeViewHolder holder, int position) {
         holder.itemName.setText(itemList.get(position).getName());
-        holder.itemPhoto.setImageResource(itemList.get(position).getPhoto());
+//        holder.itemPhoto.setImageResource(itemList.get(position).getPhoto());
+
+//            Glide
+//                .with(context)
+//                .load(itemList.get(position).getPhoto())
+//                .into(holder.itemPhoto);
+
+        Picasso.with(context)
+                .load(itemList.get(position).getPhoto())
+                .resize(0, 600)
+                .into(holder.itemPhoto);
+
 //        Picasso.with(context)
 //                .load(itemList.get(position).getPhoto())
 //                .fit()
 //                .centerCrop()
 //                .into(holder.itemPhoto);
+
+
     }
 
     @Override

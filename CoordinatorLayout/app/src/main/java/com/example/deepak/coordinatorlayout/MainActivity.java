@@ -1,35 +1,23 @@
 package com.example.deepak.coordinatorlayout;
 
 import android.annotation.TargetApi;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.TextView;
 
 import com.example.deepak.coordinatorlayout.views.CustomViewPager;
 import com.roughike.bottombar.BottomBar;
@@ -185,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the TextView text size in dp
         // This will change the ActionBar title text size
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP,14);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
 
         // Set the ActionBar display option
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);

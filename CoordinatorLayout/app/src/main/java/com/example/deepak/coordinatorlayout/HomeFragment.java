@@ -3,6 +3,7 @@ package com.example.deepak.coordinatorlayout;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -42,9 +43,10 @@ public class HomeFragment extends Fragment {
 //        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
 
         recyclerView.setHasFixedSize(true);
-        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, 1);
+        recyclerView.setItemAnimator(null);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
-
         recyclerView.setAdapter(new HomeRecyclerViewAdapter(getActivity(),getListItemData()));
     }
 
