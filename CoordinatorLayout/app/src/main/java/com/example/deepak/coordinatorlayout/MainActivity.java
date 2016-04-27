@@ -1,5 +1,8 @@
 package com.example.deepak.coordinatorlayout;
 
+import android.annotation.TargetApi;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -14,12 +17,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.RelativeLayout.LayoutParams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +42,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         final ActionBar ab = getSupportActionBar();
-//        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-//        ab.setDisplayHomeAsUpEnabled(true);
+        resizeActionbarTitle(ab);
+        ab.setHomeAsUpIndicator(R.drawable.ic_menu_black_24px);
+        ab.setDisplayHomeAsUpEnabled(true);
+
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         if (viewPager != null) {
@@ -54,6 +63,37 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void resizeActionbarTitle(ActionBar ab) {
+        // Create a TextView programmatically.
+        TextView tv = new TextView(getApplicationContext());
+
+        // Create a LayoutParams for TextView
+        LayoutParams lp = new LayoutParams(
+                LayoutParams.MATCH_PARENT, // Width of TextView
+                LayoutParams.WRAP_CONTENT); // Height of TextView
+
+        // Apply the layout parameters to TextView widget
+        tv.setLayoutParams(lp);
+
+        // Set text to display in TextView
+        tv.setText(ab.getTitle()); // ActionBar title text
+
+        // Set the text color of TextView to black
+        // This line change the ActionBar title text color
+        tv.setTextColor(getColor(R.color.actionbar_title));
+
+        // Set the TextView text size in dp
+        // This will change the ActionBar title text size
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP,14);
+
+        // Set the ActionBar display option
+        ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+
+        // Finally, set the newly created TextView as ActionBar custom view
+        ab.setCustomView(tv);
     }
 
     @Override

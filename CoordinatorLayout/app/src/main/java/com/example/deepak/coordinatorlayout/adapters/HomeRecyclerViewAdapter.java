@@ -36,7 +36,6 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeViewHolder
     @Override
     public void onBindViewHolder(HomeViewHolder holder, int position) {
         holder.itemName.setText(itemList.get(position).getName());
-//        holder.itemPhoto.setImageResource(itemList.get(position).getPhoto());
         Picasso.with(context)
                 .load(itemList.get(position).getPhoto())
                 .fit()
